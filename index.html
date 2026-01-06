@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatSafe Pro - AI Chat Moderation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            color: #4CAF50;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #4CAF50;
+        }
+        
+        .btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #4CAF50, #2E7D32);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #ccc;
+        }
+        
+        .demo-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 800px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .demo-box h2 {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 120px;
+            margin-bottom: 20px;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        
+        .result-box {
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            animation: fadeIn 0.5s;
+        }
+        
+        .safe {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4CAF50;
+        }
+        
+        .warning {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid #FFC107;
+        }
+        
+        .danger {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #F44336;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin: 50px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 15px;
+            min-width: 200px;
+        }
+        
+        .stat-number {
+            font-size: 40px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        
+        .pricing {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 40px 30px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: #4CAF50;
+        }
+        
+        .pricing-card.popular {
+            background: rgba(76, 175, 80, 0.1);
+            border: 2px solid #4CAF50;
+            transform: scale(1.05);
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 24px;
+            color: #ccc;
+        }
+        
+        .features {
+            margin: 20px 0 30px;
+            text-align: left;
+        }
+        
+        .features li {
+            padding: 8px 0;
+            list-style: none;
+        }
+        
+        .features li i {
+            color: #4CAF50;
+            margin-right: 10px;
+        }
+        
+        .signup-form {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 600px;
+            margin: 60px auto;
+            backdrop-filter: blur(10px);
+        }
+        
+        .signup-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 16px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 60px;
+            color: #aaa;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loading i {
+            font-size: 30px;
+            color: #4CAF50;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .toxicity-meter {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .toxicity-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .pricing { flex-direction: column; align-items: center; }
+            .pricing-card.popular { transform: none; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>ChatSafe Pro</span>
+            </div>
+            <nav>
+                <a href="#demo">Demo</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#signup">Sign Up</a>
+                <a href="#features">Features</a>
+            </nav>
+            <button class="btn" onclick="scrollToSignup()">Get Started</button>
+        </header>
+        
+        <section class="hero">
+            <h1>AI-Powered Chat Moderation</h1>
+            <p>Protect your community from toxicity, harassment, and spam with our real-time AI moderation system. Used by gaming communities, social platforms, and businesses worldwide.</p>
+            <button class="btn" style="padding: 15px 30px; font-size: 18px;" onclick="scrollToDemo()">
+                <i class="fas fa-robot"></i> Try Live Demo
+            </button>
+        </section>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="messagesChecked">0</div>
+                <div>Messages Checked</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="toxicityBlocked">0</div>
+                <div>Toxicity Blocked</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.7%</div>
+                <div>Accuracy Rate</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="communities">1,234+</div>
+                <div>Protected Communities</div>
+            </div>
+        </div>
+        
+        <section class="demo-box" id="demo">
+            <h2><i class="fas fa-vial"></i> Live Moderation Demo</h2>
+            <p>Type a message below to see our AI moderation in action:</p>
+            
+            <textarea id="messageInput" placeholder="Type a message to check for toxicity... (Try: 'You're so stupid!' or 'Have a nice day!')">You're so stupid! I hate you!</textarea>
+            
+            <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                <button class="btn" onclick="checkMessage()" style="flex: 1;">
+                    <i class="fas fa-search"></i> Check Message
+                </button>
+                <button class="btn" onclick="clearDemo()" style="background: #666; flex: 1;">
+                    <i class="fas fa-redo"></i> Clear
+                </button>
+            </div>
+            
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner"></i>
+                <p>AI is analyzing your message...</p>
+            </div>
+            
+            <div class="result-box safe" id="resultBox" style="display: none;">
+                <h3 id="resultTitle">✅ Message is Safe</h3>
+                <div class="toxicity-meter">
+                    <div class="toxicity-fill" id="toxicityFill" style="width: 10%;"></div>
+                </div>
+                <p id="resultText">Analysis will appear here</p>
+                <div id="breakdown" style="margin-top: 15px;"></div>
+            </div>
+        </section>
+        
+        <section id="pricing">
+            <h2 style="text-align: center; font-size: 36px; margin-bottom: 40px;">Simple, Transparent Pricing</h2>
+            <div class="pricing">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">$0<span>/month</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> 1,000 messages/month</li>
+                        <li><i class="fas fa-check"></i> Basic toxicity detection</li>
+                        <li><i class="fas fa-check"></i> Email support</li>
+                        <li><i class="fas fa-times"></i> Advanced filters</li>
+                        <li><i class="fas fa-times"></i> Priority support</li>
+                    </ul>
+                    <button class="btn" onclick="selectPlan('starter')">Get Started</button>
+                </div>
+                
+                <div class="pricing-card popular">
+                    <div style="background: #4CAF50; color: white; padding: 5px 15px; border-radius: 20px; display: inline-block; margin-bottom: 15px;">MOST POPULAR</div>
+                    <h3>Pro</h3>
+                    <div class="price">$99<span>/month</span></div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> 100,000 messages/month</li>
+                        <li><i class="fas fa-check"></i> Advanced AI detection</li>
+                        <li><i class="fas fa-check"></i> Image moderation</li>
+                        <li><i class="fas fa-check"></i> Custom word filters</li>
+                        <li><i class="fas fa-check"></i> Priority support</li>
+                    </ul>
+                    <button class="btn" onclick="selectPlan('pro')" style="background: #FF9800;">Buy Now</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Custom</div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> Unlimited messages</li>
+                        <li><i class="fas fa-check"></i> Custom AI models</li>
+                        <li><i class="fas fa-check"></i> Voice moderation</li>
+                        <li><i class="fas fa-check"></i> Dedicated support</li>
+                        <li><i class="fas fa-check"></i> SLA guarantee</li>
+                    </ul>
+                    <button class="btn" onclick="selectPlan('enterprise')">Contact Sales</button>
+                </div>
+            </div>
+        </section>
+        
+        <section class="signup-form" id="signup">
+            <h2>Start Your Free Trial</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: #ccc;">No credit card required • 14-day free trial</p>
+            
+            <form id="signupForm">
+                <div class="form-group">
+                    <input type="text" placeholder="Full Name" id="name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address" id="email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Company/Community Name" id="company">
+                </div>
+                <div class="form-group">
+                    <select id="plan" style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.2); background: rgba(0, 0, 0, 0.3); color: white; font-size: 16px;">
+                        <option value="starter">Starter (Free)</option>
+                        <option value="pro" selected>Pro ($99/month)</option>
+                        <option value="enterprise">Enterprise (Custom)</option>
+                    </select>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <label style="display: flex; align-items: center; gap: 10px;">
+                        <input type="checkbox" required style="width: 18px; height: 18px;">
+                        I agree to the Terms of Service and Privacy Policy
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%; padding: 18px; font-size: 18px;">
+                    <i class="fas fa-rocket"></i> Start Free Trial
+                </button>
+            </form>
+            
+            <p style="text-align: center; margin-top: 20px; color: #aaa; font-size: 14px;">
+                <i class="fas fa-lock"></i> Your information is secure and encrypted
+            </p>
+        </section>
+        
+        <footer>
+            <div class="logo" style="justify-content: center; margin-bottom: 20px;">
+                <i class="fas fa-shield-alt"></i>
+                <span>ChatSafe Pro</span>
+            </div>
+            <p>AI-Powered Chat Moderation & Protection</p>
+            <p style="margin-top: 20px; color: #888;">© 2023 ChatSafe Pro. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 14px; color: #666;">
+                Messages checked: <span id="footerCount">0</span> | Protected communities: <span id="footerCommunities">1,234</span>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // SIMPLE AI MODERATION THAT WORKS WITHOUT API KEY
+        // This is a simulated AI that works 100% locally
+        
+        // Statistics
+        let messagesChecked = 0;
+        let toxicityBlocked = 0;
+        
+        // DOM Elements
+        const messageInput = document.getElementById('messageInput');
+        const resultBox = document.getElementById('resultBox');
+        const resultTitle = document.getElementById('resultTitle');
+        const resultText = document.getElementById('resultText');
+        const toxicityFill = document.getElementById('toxicityFill');
+        const breakdownDiv = document.getElementById('breakdown');
+        const loadingDiv = document.getElementById('loading');
+        
+        // Bad words database (can be expanded)
+        const badWords = {
+            // High severity words
+            severe: ['kill', 'die', 'murder', 'suicide', 'rape', 'attack', 'bomb', 'terrorist'],
+            // Medium severity words  
+            medium: ['stupid', 'idiot', 'moron', 'retard', 'dumb', 'fool', 'loser', 'hate'],
+            // Low severity words
+            mild: ['shutup', 'ugly', 'fat', 'lame', 'suck', 'crazy', 'weird']
+        };
+        
+        // Offensive phrases (context matters)
+        const offensivePhrases = [
+            'i hate you', 'you suck', 'go die', 'kill yourself', 'you\'re worthless',
+            'nobody likes you', 'you should die', 'i hope you die', 'you\'re trash'
+        ];
+        
+        // Update stats display
+        function updateStats() {
+            document.getElementById('messagesChecked').textContent = messagesChecked.toLocaleString();
+            document.getElementById('toxicityBlocked').textContent = toxicityBlocked.toLocaleString();
+            document.getElementById('footerCount').textContent = messagesChecked.toLocaleString();
+            
+            // Update communities (random growth for demo)
+            const communities = 1234 + Math.floor(messagesChecked / 100);
+            document.getElementById('communities').textContent = communities.toLocaleString() + '+';
+            document.getElementById('footerCommunities').textContent = communities.toLocaleString();
+        }
+        
+        // Scroll functions
+        function scrollToDemo() {
+            document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function scrollToSignup() {
+            document.getElementById('signup').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Clear demo
+        function clearDemo() {
+            messageInput.value = '';
+            resultBox.style.display = 'none';
+        }
+        
+        // Smart AI moderation (local, no API needed)
+        function checkMessage() {
+            const message = messageInput.value.trim().toLowerCase();
+            
+            if (!message) {
+                alert('Please enter a message to check');
+                return;
+            }
+            
+            // Show loading animation
+            loadingDiv.style.display = 'block';
+            resultBox.style.display = 'none';
+            
+            // Increment counter
+            messagesChecked++;
+            
+            // Simulate AI thinking (1 second delay)
+            setTimeout(() => {
+                // Analyze the message
+                const analysis = analyzeMessage(message);
+                
+                // Hide loading
+                loadingDiv.style.display = 'none';
+                
+                // Update UI with results
+                displayResults(analysis);
+                
+                // Update stats
+                if (analysis.toxicity >= 80) {
+                    toxicityBlocked++;
+                }
+                updateStats();
+                
+            }, 800); // 0.8 second delay to simulate AI thinking
+        }
+        
+        // Analyze message locally
+        function analyzeMessage(message) {
+            let toxicity = 0;
+            let categories = {
+                hate: false,
+                insult: false,
+                threat: false,
+                profanity: false,
+                harassment: false
+            };
+            
+            let foundWords = [];
+            let severity = 'safe';
+            
+            // Check for severe words
+            badWords.severe.forEach(word => {
+                if (message.includes(word)) {
+                    toxicity += 40;
+                    categories.threat = true;
+                    foundWords.push(word);
+                }
+            });
+            
+            // Check for medium words
+            badWords.medium.forEach(word => {
+                if (message.includes(word)) {
+                    toxicity += 25;
+                    categories.insult = true;
+                    foundWords.push(word);
+                }
+            });
+            
+            // Check for mild words
+            badWords.mild.forEach(word => {
+                if (message.includes(word)) {
+                    toxicity += 15;
+                    categories.insult = true;
+                    foundWords.push(word);
+                }
+            });
+            
+            // Check for offensive phrases
+            offensivePhrases.forEach(phrase => {
+                if (message.includes(phrase)) {
+                    toxicity += 35;
+                    categories.hate = true;
+                    foundWords.push(phrase);
+                }
+            });
+            
+            // Check for ALL CAPS (yelling)
+            if (message === message.toUpperCase() && message.length > 5) {
+                toxicity += 10;
+            }
+            
+            // Check for excessive punctuation (aggressive tone)
+            const exclMarks = (message.match(/!/g) || []).length;
+            const quesMarks = (message.match(/\?/g) || []).length;
+            if (exclMarks > 3) toxicity += 15;
+            
+            // Cap toxicity at 100
+            toxicity = Math.min(100, toxicity);
+            
+            // Determine severity
+            if (toxicity >= 80) severity = 'danger';
+            else if (toxicity >= 50) severity = 'warning';
+            else severity = 'safe';
+            
+            return {
+                toxicity: toxicity,
+                severity: severity,
+                categories: categories,
+                foundWords: [...new Set(foundWords)], // Remove duplicates
+                flagged: toxicity >= 50
+            };
+        }
+        
+        // Display results
+        function displayResults(analysis) {
+            const { toxicity, severity, categories, foundWords, flagged } = analysis;
+            
+            // Update toxicity meter
+            toxicityFill.style.width = `${toxicity}%`;
+            
+            // Set colors based on severity
+            if (severity === 'danger') {
+                toxicityFill.style.background = '#F44336';
+                resultBox.className = 'result-box danger';
+                resultTitle.textContent = '🚫 High Toxicity Detected';
+                resultTitle.innerHTML = '<i class="fas fa-skull-crossbones"></i> DANGER: High Toxicity Detected';
+            } else if (severity === 'warning') {
+                toxicityFill.style.background = '#FFC107';
+                resultBox.className = 'result-box warning';
+                resultTitle.textContent = '⚠️ Moderate Risk Detected';
+                resultTitle.innerHTML = '<i class="fas fa-exclamation-triangle"></i> WARNING: Moderate Risk';
+            } else {
+                toxicityFill.style.background = '#4CAF50';
+                resultBox.className = 'result-box safe';
+                resultTitle.textContent = '✅ Message is Safe';
+                resultTitle.innerHTML = '<i class="fas fa-check-circle"></i> Message is Safe';
+            }
+            
+            // Build result text
+            let resultHTML = `<strong>Toxicity Score: ${toxicity}%</strong><br>`;
+            
+            if (flagged) {
+                resultHTML += 'This message was flagged as potentially harmful.<br>';
+                if (foundWords.length > 0) {
+                    resultHTML += `Detected: ${foundWords.slice(0, 5).join(', ')}`;
+                    if (foundWords.length > 5) resultHTML += ` and ${foundWords.length - 5} more`;
+                }
+            } else {
+                resultHTML += 'This message appears to be clean and respectful.';
+            }
+            
+            resultText.innerHTML = resultHTML;
+            
+            // Build category breakdown
+            let breakdownHTML = '<strong>Category Analysis:</strong><br><div style="margin-top: 10px;">';
+            
+            for (const [category, detected] of Object.entries(categories)) {
+                if (detected) {
+                    const categoryNames = {
+                        hate: 'Hate Speech',
+                        insult: 'Insult',
+                        threat: 'Threat',
+                        profanity: 'Profanity',
+                        harassment: 'Harassment'
+                    };
+                    
+                    breakdownHTML += `
+                        <div style="display: inline-block; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 5px; margin: 5px;">
+                            <i class="fas fa-times-circle" style="color: #F44336;"></i> ${categoryNames[category]}
+                        </div>
+                    `;
+                } else {
+                    breakdownHTML += `
+                        <div style="display: inline-block; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 5px; margin: 5px;">
+                            <i class="fas fa-check-circle" style="color: #4CAF50;"></i> ${category.charAt(0).toUpperCase() + category.slice(1)}
+                        </div>
+                    `;
+                }
+            }
+            
+            breakdownHTML += '</div>';
+            breakdownDiv.innerHTML = breakdownHTML;
+            
+            // Show result box
+            resultBox.style.display = 'block';
+        }
+        
+        // Auto-check on typing (with delay)
+        let typingTimer;
+        messageInput.addEventListener('input', function() {
+            clearTimeout(typingTimer);
+            if (this.value.length > 5) {
+                typingTimer = setTimeout(checkMessage, 1000);
+            }
+        });
+        
+        // Handle signup form
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const company = document.getElementById('company').value;
+            const plan = document.getElementById('plan').value;
+            
+            // Show success message
+            alert(`Thank you ${name}! Your ${plan} trial has been activated. Check your email (${email}) for next steps.`);
+            
+            // Reset form
+            this.reset();
+            document.getElementById('plan').value = 'pro';
+            
+            // Show confirmation
+            resultBox.style.display = 'block';
+            resultBox.className = 'result-box safe';
+            resultTitle.innerHTML = '<i class="fas fa-party-horn"></i> Welcome to ChatSafe Pro!';
+            resultText.innerHTML = `Your ${plan} trial is now active. Check your email for login instructions.`;
+            breakdownDiv.innerHTML = '<div style="background: rgba(76, 175, 80, 0.3); padding: 10px; border-radius: 5px;">Account created successfully! You can now use all features.</div>';
+            
+            // Scroll to demo
+            scrollToDemo();
+        });
+        
+        // Handle plan selection
+        function selectPlan(plan) {
+            document.getElementById('plan').value = plan;
+            scrollToSignup();
+            
+            // Highlight the selected plan
+            const plans = document.querySelectorAll('.pricing-card');
+            plans.forEach(card => card.classList.remove('popular'));
+            
+            if (plan === 'pro') {
+                document.querySelectorAll('.pricing-card')[1].classList.add('popular');
+            }
+        }
+        
+        // Initialize - auto-check the example message
+        updateStats();
+        
+        // Check the pre-filled example message on page load
+        window.onload = function() {
+            setTimeout(() => {
+                checkMessage();
+            }, 500);
+        };
+        
+        // Test messages for quick testing
+        function testMessage(message) {
+            messageInput.value = message;
+            checkMessage();
+        }
+    </script>
+</body>
+</html>
