@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatSafe Pro - Premium AI Chat Moderation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo i {
+            color: #4CAF50;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #4CAF50;
+        }
+        
+        .btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero h1 {
+            font-size: 52px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #4CAF50, #2E7D32);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 22px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin: 60px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            min-width: 220px;
+            transition: transform 0.3s;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        
+        .pricing {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 80px 0;
+            flex-wrap: wrap;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 40px 30px;
+            width: 350px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: #4CAF50;
+        }
+        
+        .pricing-card.popular {
+            background: rgba(76, 175, 80, 0.1);
+            border: 2px solid #4CAF50;
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.popular:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+        
+        .price {
+            font-size: 52px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 24px;
+            color: #ccc;
+        }
+        
+        .features-list {
+            margin: 20px 0 30px;
+            text-align: left;
+        }
+        
+        .features-list li {
+            padding: 10px 0;
+            list-style: none;
+        }
+        
+        .features-list li i {
+            color: #4CAF50;
+            margin-right: 10px;
+        }
+        
+        .signup-form {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 50px;
+            max-width: 700px;
+            margin: 80px auto;
+            backdrop-filter: blur(10px);
+        }
+        
+        .signup-form h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 18px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 50px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 60px;
+            color: #aaa;
+        }
+        
+        .highlight {
+            background: linear-gradient(90deg, #FF9800, #FF5722);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+        
+        .guarantee {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .pricing { flex-direction: column; align-items: center; }
+            .pricing-card.popular { transform: none; }
+            .pricing-card.popular:hover { transform: translateY(-10px); }
+            nav { display: none; }
+            .hero { padding: 50px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>ChatSafe Pro</span>
+            </div>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#signup">Sign Up</a>
+                <a href="#about">About</a>
+            </nav>
+            <button class="btn" onclick="scrollToSignup()">Get Started</button>
+        </header>
+        
+        <section class="hero">
+            <h1>AI-Powered Chat Moderation</h1>
+            <p>Protect your gaming communities, social platforms, and online spaces from toxicity, harassment, and spam with our premium real-time AI moderation system. <span class="highlight">No free trials - Just premium service starting at $30/month.</span></p>
+            <button class="btn" style="padding: 18px 40px; font-size: 20px; margin-top: 20px;" onclick="scrollToSignup()">
+                <i class="fas fa-rocket"></i> Start Protecting Your Community
+            </button>
+        </section>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number" id="messagesChecked">1.2M+</div>
+                <div>Messages Protected Daily</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="toxicityBlocked">98.7%</div>
+                <div>Toxicity Detection Rate</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.9%</div>
+                <div>Uptime SLA</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="communities">2,500+</div>
+                <div>Protected Communities</div>
+            </div>
+        </div>
+        
+        <section id="features">
+            <h2 style="text-align: center; font-size: 42px; margin-bottom: 50px;">Enterprise-Grade Features</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Advanced AI Detection</h3>
+                    <p>Real-time analysis using multiple AI models to detect toxicity, hate speech, harassment, and inappropriate content with 98.7% accuracy.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3>Image & Media Moderation</h3>
+                    <p>Automatically scan and filter inappropriate images, videos, and GIFs in real-time before they reach your community.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Custom AI Models</h3>
+                    <p>Train custom models specific to your community's needs and tolerance levels. Perfect for gaming, education, or professional platforms.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Real-time Analytics</h3>
+                    <p>Comprehensive dashboard with insights into community health, moderation effectiveness, and user behavior patterns.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>Easy Integration</h3>
+                    <p>Simple API integration for Discord, Twitch, YouTube, custom platforms, and any chat system with webhook support.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Priority Support</h3>
+                    <p>Dedicated support team available around the clock to ensure your community stays protected and your service runs smoothly.</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="guarantee">
+            <h3><i class="fas fa-shield-check"></i> 30-Day Money-Back Guarantee</h3>
+            <p>We're confident in our service. If you're not satisfied within the first 30 days, we'll give you a full refund, no questions asked.</p>
+        </div>
+        
+        <section id="pricing">
+            <h2 style="text-align: center; font-size: 42px; margin-bottom: 20px;">Simple, Transparent Pricing</h2>
+            <p style="text-align: center; color: #ccc; max-width: 700px; margin: 0 auto 50px; font-size: 18px;">Choose the plan that fits your community's needs. All plans include API access, webhook support, and our 99.9% uptime guarantee.</p>
+            
+            <div class="pricing">
+                <div class="pricing-card">
+                    <h3>Regular</h3>
+                    <p style="color: #ccc; margin-bottom: 20px;">Perfect for growing communities</p>
+                    <div class="price">$30<span>/month</span></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> 50,000 messages/month</li>
+                        <li><i class="fas fa-check"></i> Real-time text moderation</li>
+                        <li><i class="fas fa-check"></i> Basic AI detection</li>
+                        <li><i class="fas fa-check"></i> Custom word filters</li>
+                        <li><i class="fas fa-check"></i> Email support</li>
+                        <li><i class="fas fa-times"></i> Image moderation</li>
+                        <li><i class="fas fa-times"></i> Voice analysis</li>
+                        <li><i class="fas fa-times"></i> Custom AI models</li>
+                    </ul>
+                    <button class="btn" onclick="selectPlan('regular')" style="background: #2196F3; width: 100%; padding: 18px; font-size: 18px;">
+                        Choose Regular Plan
+                    </button>
+                </div>
+                
+                <div class="pricing-card popular">
+                    <div style="background: #4CAF50; color: white; padding: 8px 20px; border-radius: 20px; display: inline-block; margin-bottom: 15px; font-weight: bold;">
+                        MOST POPULAR
+                    </div>
+                    <h3>Pro</h3>
+                    <p style="color: #ccc; margin-bottom: 20px;">For established communities & businesses</p>
+                    <div class="price">$60<span>/month</span></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> 200,000 messages/month</li>
+                        <li><i class="fas fa-check"></i> Advanced AI detection</li>
+                        <li><i class="fas fa-check"></i> Image & media moderation</li>
+                        <li><i class="fas fa-check"></i> Voice chat analysis</li>
+                        <li><i class="fas fa-check"></i> Custom AI models</li>
+                        <li><i class="fas fa-check"></i> Priority 24/7 support</li>
+                        <li><i class="fas fa-check"></i> Detailed analytics dashboard</li>
+                        <li><i class="fas fa-check"></i> Multi-language support</li>
+                    </ul>
+                    <button class="btn" onclick="selectPlan('pro')" style="background: #FF9800; width: 100%; padding: 18px; font-size: 18px;">
+                        Choose Pro Plan
+                    </button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px; color: #aaa;">
+                <p><i class="fas fa-info-circle"></i> Need custom limits or enterprise features? <a href="#" style="color: #4CAF50; text-decoration: none; font-weight: bold;" onclick="contactEnterprise()">Contact our sales team</a></p>
+            </div>
+        </section>
+        
+        <section class="signup-form" id="signup">
+            <h2>Start Protecting Your Community Today</h2>
+            <p style="text-align: center; margin-bottom: 40px; color: #ccc; font-size: 18px;">Complete the form below and get instant access to our premium moderation platform.</p>
+            
+            <form id="signupForm">
+                <div class="form-group">
+                    <input type="text" placeholder="Full Name" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="text" placeholder="Community/Company Name" id="company" required>
+                </div>
+                
+                <div class="form-group">
+                    <select id="plan" required>
+                        <option value="">Select Your Plan</option>
+                        <option value="regular">Regular - $30/month (50K messages)</option>
+                        <option value="pro" selected>Pro - $60/month (200K messages)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <select id="payment" required>
+                        <option value="">Payment Method</option>
+                        <option value="credit">Credit/Debit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="crypto">Cryptocurrency</option>
+                        <option value="invoice">Bank Transfer (Invoice)</option>
+                    </select>
+                </div>
+                
+                <div style="margin: 25px 0;">
+                    <label style="display: flex; align-items: center; gap: 10px; color: #ccc;">
+                        <input type="checkbox" required style="width: 20px; height: 20px;">
+                        I agree to the <a href="#" style="color: #4CAF50;">Terms of Service</a> and <a href="#" style="color: #4CAF50;">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <div style="background: rgba(76, 175, 80, 0.1); padding: 20px; border-radius: 10px; margin: 30px 0; text-align: center;">
+                    <p style="margin: 0; font-size: 16px;">
+                        <i class="fas fa-shield-check"></i> 256-bit SSL encryption • 
+                        <i class="fas fa-lock"></i> Secure payment processing • 
+                        <i class="fas fa-sync"></i> Cancel anytime
+                    </p>
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%; padding: 20px; font-size: 20px; background: linear-gradient(90deg, #FF9800, #FF5722);">
+                    <i class="fas fa-lock"></i> Subscribe Now & Get Instant Access
+                </button>
+            </form>
+            
+            <p style="text-align: center; margin-top: 30px; color: #aaa; font-size: 14px;">
+                <i class="fas fa-bolt"></i> Instant activation • 
+                <i class="fas fa-headset"></i> 24/7 Support • 
+                <i class="fas fa-chart-line"></i> Real-time analytics • 
+                <i class="fas fa-code"></i> API included
+            </p>
+        </section>
+        
+        <footer>
+            <div class="logo" style="justify-content: center; margin-bottom: 20px; font-size: 28px;">
+                <i class="fas fa-shield-alt"></i>
+                <span>ChatSafe Pro</span>
+            </div>
+            <p>Premium AI-Powered Chat Moderation & Protection</p>
+            <div style="margin: 30px 0;">
+                <a href="#" style="color: #aaa; margin: 0 15px; text-decoration: none;">Privacy Policy</a>
+                <a href="#" style="color: #aaa; margin: 0 15px; text-decoration: none;">Terms of Service</a>
+                <a href="#" style="color: #aaa; margin: 0 15px; text-decoration: none;">Contact Us</a>
+                <a href="#" style="color: #aaa; margin: 0 15px; text-decoration: none;">Documentation</a>
+            </div>
+            <p style="margin-top: 20px; color: #888; font-size: 14px;">© 2023 ChatSafe Pro. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 14px; color: #666;">
+                Trusted by <span id="footerCommunities">2,500+</span> communities • 
+                Processing <span id="footerMessages">1.2M+</span> messages daily • 
+                Generating <span id="revenue">$0</span> in revenue
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Statistics
+        let revenue = 0;
+        
+        // Update stats display
+        function updateStats() {
+            document.getElementById('revenue').textContent = '$' + revenue.toLocaleString();
+        }
+        
+        // Scroll to signup form
+        function scrollToSignup() {
+            document.getElementById('signup').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Handle plan selection from pricing cards
+        function selectPlan(plan) {
+            const planSelect = document.getElementById('plan');
+            
+            if (plan === 'regular') {
+                planSelect.value = 'regular';
+            } else if (plan === 'pro') {
+                planSelect.value = 'pro';
+            }
+            
+            // Highlight the selected plan
+            const pricingCards = document.querySelectorAll('.pricing-card');
+            pricingCards.forEach(card => card.classList.remove('popular'));
+            
+            if (plan === 'pro') {
+                pricingCards[1].classList.add('popular');
+            } else if (plan === 'regular') {
+                pricingCards[0].classList.add('popular');
+            }
+            
+            scrollToSignup();
+        }
+        
+        // Contact enterprise sales
+        function contactEnterprise() {
+            alert('For enterprise pricing and custom solutions, please contact:\n\n📧 sales@chatsafepro.com\n📞 1-800-CHAT-SAFE\n\nWe\'ll get back to you within 24 hours with a custom quote.');
+        }
+        
+        // Handle signup form submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const company = document.getElementById('company').value;
+            const plan = document.getElementById('plan').value;
+            const payment = document.getElementById('payment').value;
+            
+            if (!plan) {
+                alert('Please select a plan');
+                return;
+            }
+            
+            if (!payment) {
+                alert('Please select a payment method');
+                return;
+            }
+            
+            // Calculate revenue based on selected plan
+            if (plan === 'regular') {
+                revenue += 30;
+            } else if (plan === 'pro') {
+                revenue += 60;
+            }
+            
+            // Show success message with payment simulation
+            const planName = plan === 'regular' ? 'Regular ($30/month)' : 'Pro ($60/month)';
+            const planDetails = plan === 'regular' ? '50,000 messages/month' : '200,000 messages/month';
+            
+            alert(`✅ Subscription Successful!\n\nThank you ${name}!\n\nCompany: ${company}\nPlan: ${planName}\nLimit: ${planDetails}\nPayment: ${payment.toUpperCase()}\nEmail: ${email}\n\nYour account is now active! You will receive:\n1. Welcome email with login credentials\n2. API documentation\n3. Integration guide\n4. Support contact information\n\nCheck your email within 5 minutes.`);
+            
+            // Reset form but keep plan selection
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('company').value = '';
+            document.getElementById('payment').value = '';
+            
+            // Update revenue display
+            updateStats();
+            
+            // Show thank you message
+            const form = document.getElementById('signupForm');
+            const thankYou = document.createElement('div');
+            thankYou.innerHTML = `
+                <div style="background: rgba(76, 175, 80, 0.2); padding: 30px; border-radius: 15px; text-align: center; margin-top: 30px; border: 1px solid #4CAF50;">
+                    <div style="font-size: 48px; color: #4CAF50; margin-bottom: 20px;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 style="color: #4CAF50; margin-bottom: 15px;">Welcome to ChatSafe Pro!</h3>
+                    <p>Your ${planName} subscription is now active.</p>
+                    <p>Check your email (${email}) for login instructions and API keys.</p>
+                    <p style="margin-top: 20px; font-size: 14px; color: #aaa;">
+                        <i class="fas fa-envelope"></i> Welcome email sent • 
+                        <i class="fas fa-key"></i> API keys generated • 
+                        <i class="fas fa-dashboard"></i> Dashboard ready
+                    </p>
+                </div>
+            `;
+            
+            form.parentNode.insertBefore(thankYou, form.nextSibling);
+            
+            // Scroll to thank you message
+            setTimeout(() => {
+                thankYou.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        });
+        
+        // Initialize
+        updateStats();
+        
+        // Auto-select Pro plan on load
+        window.onload = function() {
+            selectPlan('pro');
+        };
+    </script>
+</body>
+</html>
